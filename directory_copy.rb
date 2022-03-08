@@ -24,8 +24,14 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index do |student, index|
-    student[:name].length < 12 ? (puts "#{student[:name]} (#{student[:cohort]} cohort)") : next
+  count = 0
+  # create count to indicate where in the students array the loop is 
+  while count < students.length
+  # count equalling the length of the students array indicates we are at the end of the 
+  # list and need to break out of the loop
+    puts "#{students[count][:name]} (#{students[count][:cohort]} cohort)"
+    count += 1
+    # add 1 to the count to move onto the next student in the array
   end
 end
 
