@@ -8,8 +8,15 @@ def input_students
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
+    # ask for the students hobby, height in cm and what universe they are from
+    puts "What is their hobby?"
+    hobby = gets.chomp
+    puts "What is their height in cm?"
+    height = gets.chomp.to_f
+    puts "What universe are they from?"
+    universe = gets.chomp
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november, hobby: hobby, height: height, universe: universe}
     puts "Now we have #{students.length} students"
     # get another name from the user
     name = gets.chomp
@@ -24,14 +31,8 @@ def print_header
 end
 
 def print(students)
-  count = 0
-  # create count to indicate where in the students array the loop is 
-  while count < students.length
-  # count equalling the length of the students array indicates we are at the end of the 
-  # list and need to break out of the loop
-    puts "#{students[count][:name]} (#{students[count][:cohort]} cohort)"
-    count += 1
-    # add 1 to the count to move onto the next student in the array
+  students.each do |student|
+    puts "#{student[:name]}, hobby: #{student[:hobby]}, height: #{student[:height]}cm, universe: #{student[:universe]} (#{student[:cohort]} cohort)"
   end
 end
 
