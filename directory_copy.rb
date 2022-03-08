@@ -24,13 +24,8 @@ def print_header
 end
 
 def print(students)
-  puts "Give me the letter that each students name begins with that you would like to see"
-  letter = gets.chomp
-  # takes input from the user so they can decide which letter they want to see
   students.each_with_index do |student, index|
-    student[:name][0] == letter.upcase ? (puts "#{student[:name]} (#{student[:cohort]} cohort)") : next
-    # use the letter given from the input to show students whose name begins with that letter
-    # the .upcase makes sure the input is capitalised
+    student[:name].length < 12 ? (puts "#{student[:name]} (#{student[:cohort]} cohort)") : next
   end
 end
 
