@@ -17,12 +17,11 @@ def input_students
   students
 end
 
-def print_header
+def print(students)
+  # use if to return nothing if there are no students
+  return nil if students.length == 0
   puts "The students of my cohort at Makers Academy"
   puts "-------------"
-end
-
-def print(students)
   students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
@@ -34,6 +33,5 @@ end
 
 
 students = input_students
-print_header
 print(students)
 print_footer(students)
