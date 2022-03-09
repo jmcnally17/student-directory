@@ -34,8 +34,15 @@ def print_header
 end
 
 def print(students)
+  # create empty array which is where students grouped by cohort will be put into
+  cohort_group = {}
+  # group the students by cohort
   students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    cohort_group.has_key?(student[:cohort]) ? (cohort_group[student[:cohort]] << ", #{student[:name]}") : (cohort_group[student[:cohort]] = student[:name])
+  end
+  # print each cohort with the names of the students in them
+  cohort_group.each do |cohort, names|
+    puts "#{cohort} cohort: #{names}"
   end
 end
 
