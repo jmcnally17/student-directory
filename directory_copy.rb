@@ -5,14 +5,14 @@ def input_students
   # create and empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.strip
   # while the name is not empty, repeat this code
   while !name.empty? do
     # create an array of each month and also the possible empty input for cohort
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""]
     # ask for which cohort they are in
     puts "Which cohort are they in?"
-    cohort = gets.chomp.capitalize
+    cohort = gets.strip.capitalize
     # if the spelling of the month is incorrect, it will skip the next steps and will start
     # the loop again, asking for the cohort
     months.include?(cohort) ? (puts "Valid month") : next
@@ -23,7 +23,7 @@ def input_students
     # change what is printed, depending on whether or not there is exactly 1 student
     students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students")
     # get another name from the user
-    name = gets.chomp
+    name = gets.strip
   end
   # return the array of students
   students
