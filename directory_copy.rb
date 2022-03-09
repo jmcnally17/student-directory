@@ -20,7 +20,8 @@ def input_students
     cohort = Time.now.strftime("%B") if cohort == ""
     # add the student hash to the array and convert cohort into a symbol
     students << {name: name, cohort: cohort.to_sym}
-    puts "Now we have #{students.length} students"
+    # change what is printed, depending on whether or not there is exactly 1 student
+    students.length == 1 ? (puts "Now we have #{students.length} student") : (puts "Now we have #{students.length} students")
     # get another name from the user
     name = gets.chomp
   end
@@ -47,7 +48,8 @@ def print(students)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.length} great students"
+  # change what is printed, depending on whether or not there is exactly 1 student
+  names.length == 1 ? (puts "Overall, we have #{names.length} great student") : (puts "Overall, we have #{names.length} great students")
 end
 
 # Nothing happens until we call the methods
