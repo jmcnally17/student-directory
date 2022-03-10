@@ -58,6 +58,7 @@ def input_students
     # add the student hash to the array
     cohort = "november"
     student_info(name, cohort)
+    puts "Student successfully added"
     puts "Now we have #{@students.length} student" if @students.length == 1
     puts "Now we have #{@students.length} students" if @students.length != 1
     name = STDIN.gets.chomp
@@ -81,6 +82,7 @@ def print_footer
 end
 
 def show_students
+  puts "You have chosen to show the students"
   print_header
   print_students_list
   print_footer
@@ -96,6 +98,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Students successfully saved to students.csv"
 end
 
 def load_students(filename = "students.csv")
