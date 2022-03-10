@@ -27,12 +27,10 @@ def load_students
   filename = STDIN.gets.chomp
   # check if filename given is valid
   if File.exists?(filename)
-    file = File.open(filename, "r")
-    file.readlines.each do |line|
+    File.foreach(filename) do |line|
       name, cohort = line.chomp.split(",")
       student_info(name, cohort)
     end
-    file.close
     puts "Loaded students from #{filename}"
   else
     puts "I'm sorry, that file does not exist"
@@ -123,14 +121,16 @@ def save_students
   filename = STDIN.gets.chomp
   if File.exists?(filename)
     # open the file for writing
-    file = File.open(filename, "w")
-    # iterate over the array of students
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+    File.open(filename, "w") do |file| 
+      # iterate over the array of students
+      @students.each do |student|
+        student_data = [student[:name], student[:cohort]]
+        csv_line = student_data.join(",")
+        file.puts csv_line
+      end
     end
-    file.close
+    
+    #file.close
     puts "Students successfully saved to #{filename}"
   else
     puts "I'm sorry, that file does not exist"
