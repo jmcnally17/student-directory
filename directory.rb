@@ -10,7 +10,8 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    cohort = "november"
+    student_info(name, cohort)
     puts "Now we have #{@students.length} students"
     # get another name from the user
     name = STDIN.gets.chomp
@@ -92,9 +93,10 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
+    student_info(name, cohort)
   end
   file.close
+  puts "Now we have #{@students.length} students"
 end
 
 def interactive_menu
@@ -105,6 +107,12 @@ def interactive_menu
     process(STDIN.gets.chomp)
   end
 end
+
+
+def student_info(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
 
 # Nothing happens until we call the method
 try_load_students
