@@ -2,13 +2,41 @@
 @students = []
 
 def try_load_students
-  filename = ARGV.first # first argument from the command line
-  filename = "students.csv" if ARGV.first.nil? # use "students.csv" if no file is given
-  if File.exists?(filename) # if it exists
-    load_students(filename)
-  else # if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
+  # keep asking the user until a valid response is given
+  loop do
+  # ask if they want to load students in straight away
+  puts "Would you like to load students from a file? (yes/no)"
+  # get the users choice from input
+  choice = STDIN.gets.chomp
+    if choice == "yes"
+      load_students
+      # come out of loop when valid response is given
+      break
+    elsif choice == "no"
+      puts "Very well, you have chosen not to"
+      # come out of loop when valid response is given
+      break
+    else
+      puts "I don't know what you mean, try again"
+    end
+  end
+end
+
+def load_students
+  puts "Which file would you like to load students from?"
+  filename = STDIN.gets.chomp
+  # check if filename given is valid
+  if File.exists?(filename)
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      student_info(name, cohort)
+    end
+    file.close
+    puts "Loaded students from #{filename}"
+  else
+    puts "I'm sorry, that file does not exist"
+    puts "Failed to load any students"
   end
 end
 
@@ -89,26 +117,24 @@ def show_students
 end
 
 def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  # ask which file to save to
+  puts "Which file would you like to save to?"
+  # take the filename from input
+  filename = STDIN.gets.chomp
+  if File.exists?(filename)
+    # open the file for writing
+    file = File.open(filename, "w")
+    # iterate over the array of students
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
+    file.close
+    puts "Students successfully saved to #{filename}"
+  else
+    puts "I'm sorry, that file does not exist"
   end
-  file.close
-  puts "Students successfully saved to students.csv"
-end
-
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    student_info(name, cohort)
-  end
-  file.close
-  puts "Loaded students from #{filename}"
 end
 
 def student_info(name, cohort)
