@@ -12,8 +12,8 @@ def input_students
     # add the student hash to the array
     cohort = "november"
     student_info(name, cohort)
-    puts "Now we have #{@students.length} students"
-    # get another name from the user
+    puts "Now we have #{@students.length} student" if @students.length == 1
+    puts "Now we have #{@students.length} students" if @students.length != 1
     name = STDIN.gets.chomp
   end
 end
@@ -30,7 +30,8 @@ def print_students_list
 end
 
 def print_footer
-  puts "Overall, we have #{@students.length} great students"
+  puts "Overall, we have #{@students.length} great student" if @students.length == 1
+  puts "Overall, we have #{@students.length} great students" if @students.length != 1
 end
 
 def print_menu
@@ -79,10 +80,10 @@ end
 
 def try_load_students
   filename = ARGV.first # first argument from the command line
+  filename = "students.csv" if ARGV.first == nil
   return if filename.nil? # get out of the method if it isn't given
   if File.exists?(filename) # if it exists
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
   else # if it doesn't exist
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
@@ -96,7 +97,7 @@ def load_students(filename = "students.csv")
     student_info(name, cohort)
   end
   file.close
-  puts "Now we have #{@students.length} students"
+  puts "Loaded students from #{filename}"
 end
 
 def interactive_menu
