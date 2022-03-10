@@ -1,6 +1,52 @@
 # create students as an instance vaiable so it can be used in all methods
 @students = []
 
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  filename = "students.csv" if ARGV.first.nil? # use "students.csv" if no file is given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"
+end
+
+def options(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "3"
+      save_students
+    when "4"
+      load_students
+    when "9"
+      # cause the program to terminate
+      exit
+    else
+      puts "I don't know what you mean, try again"
+  end
+end
+
+def interactive_menu
+  loop do
+    # print the menu and ask the user what to do
+    print_menu
+    # run the process method to give the user the options
+    options(STDIN.gets.chomp)
+  end
+end
+
 # Let's put all students into an array of hashes
 def input_students
   puts "Please enter the names of the students"
@@ -34,36 +80,10 @@ def print_footer
   puts "Overall, we have #{@students.length} great students" if @students.length != 1
 end
 
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
-end
-
 def show_students
   print_header
   print_students_list
   print_footer
-end
-
-def process(selection)
-  case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      # cause the program to terminate
-      exit
-    else
-      puts "I don't know what you mean, try again"
-  end
 end
 
 def save_students
@@ -78,18 +98,6 @@ def save_students
   file.close
 end
 
-def try_load_students
-  filename = ARGV.first # first argument from the command line
-  filename = "students.csv" if ARGV.first == nil
-  return if filename.nil? # get out of the method if it isn't given
-  if File.exists?(filename) # if it exists
-    load_students(filename)
-  else # if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
-  end
-end
-
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
@@ -99,16 +107,6 @@ def load_students(filename = "students.csv")
   file.close
   puts "Loaded students from #{filename}"
 end
-
-def interactive_menu
-  loop do
-    # print the menu and ask the user what to do
-    print_menu
-    # run the process method to give the user the options
-    process(STDIN.gets.chomp)
-  end
-end
-
 
 def student_info(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
