@@ -1,3 +1,4 @@
+require "csv"
 # create students as an instance vaiable so it can be used in all methods
 @students = []
 
@@ -27,8 +28,10 @@ def load_students
   filename = STDIN.gets.chomp
   # check if filename given is valid
   if File.exists?(filename)
-    File.foreach(filename) do |line|
-      name, cohort = line.chomp.split(",")
+    # use the CSV object class to read each row in the file
+    CSV.foreach(filename) do |row|
+      # assign the name and cohort variables to the appropriate elements in the row
+      name, cohort = row[0], row[1]
       student_info(name, cohort)
     end
     puts "Loaded students from #{filename}"
@@ -120,17 +123,16 @@ def save_students
   # take the filename from input
   filename = STDIN.gets.chomp
   if File.exists?(filename)
-    # open the file for writing
-    File.open(filename, "w") do |file| 
-      # iterate over the array of students
+    # open the file for writing using the CSV object class
+    CSV.open(filename, "wb") do |row| 
+    # iterate over the array of students
       @students.each do |student|
+        
         student_data = [student[:name], student[:cohort]]
-        csv_line = student_data.join(",")
-        file.puts csv_line
+        # add the student_data array to the next row in the csv file
+        row << student_data
       end
     end
-    
-    #file.close
     puts "Students successfully saved to #{filename}"
   else
     puts "I'm sorry, that file does not exist"
