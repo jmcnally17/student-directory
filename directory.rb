@@ -127,7 +127,7 @@ def save_students
     CSV.open(filename, "wb") do |row| 
     # iterate over the array of students
       @students.each do |student|
-        
+        # store the student data into an array that will be saved to the csv file
         student_data = [student[:name], student[:cohort]]
         # add the student_data array to the next row in the csv file
         row << student_data
